@@ -2,10 +2,12 @@
 # -*- coding: UTF-8 -*-
 
 from selenium.webdriver.chrome.options import Options
+import json, base64, os, jinja2
 from selenium import webdriver
-import json, base64, os.path
+from datetime import datetime
 
-inputFile = "/home/user/desktop/HTML2PDF/index.html"
+templateEnviroment = jinja2.Environment(loader=jinja2.FileSystemLoader('./'))
+inputFile = "index-WithParameters.html"
 
 def sendDevtools(driver, cmd, params={}):
   try:
@@ -22,7 +24,7 @@ def sendDevtools(driver, cmd, params={}):
   except Exception as error:
     raise ValueError(error)
 
-def saveHtmlAsPDF(path, chromedriver='./chromedriver', print_options = {}, output='generatedPDF.pdf'):
+def saveHtmlAsPDF(path, chromedriver='./chromedriver', print_options = {}, output='generatedPDF-WithParameters.pdf'):
     try:
       webdriver_options = Options()
       webdriver_options.add_argument('--headless')
@@ -54,7 +56,25 @@ def saveHtmlAsPDF(path, chromedriver='./chromedriver', print_options = {}, outpu
     	driver.quit()
 
 try:
-	saveHtmlAsPDF(inputFile, chromedriver='/usr/bin/chromedriver')
+  template = templateEnviroment.get_template(inputFile)
+
+  context = {
+    "currentDate": datetime.now().strftime("%Y-%m-%d")
+  }
+
+  generatedTemplate = template.render(context)
+
+  with open("generatedTemplate-WithParameters.html", "w") as outputFile:
+    outputFile.write(generatedTemplate)    
+    outputFile.close()
+
+  saveHtmlAsPDF(f"{os.getcwd()}/generatedTemplate-WithParameters.html", chromedriver='/usr/bin/chromedriver')
 
 except Exception as error:
 	print(error)
+
+finally:
+  try:
+    os.remove("generatedTemplate-WithParameters.html")
+  except:
+    pass  
