@@ -1,5 +1,5 @@
 *{
-    display: flex;
+	display: flex;
 }
 body {
 	page-break-inside: avoid !important;
