@@ -2,23 +2,23 @@
     display: flex;
 }
 body {
-    page-break-inside: avoid !important;
-    flex-direction: column;
-    border: none;
-    padding: 0;
-    margin: 0;
+	page-break-inside: avoid !important;
+	flex-direction: column;
+	border: none;
+	padding: 0;
+	margin: 0;
 }
 @page {
-    margin: 0;
-    size: A4;
+	margin: 0;
+	size: A4;
 }		
 .page {
-    justify-content: center;
-    align-items: center;
+	justify-content: center;
+	align-items: center;
 	height: 29.71cm; 
 	width: 21cm;
-    color: black;
-    border: none;
-    padding: 0;
-    margin: 0;
+	color: black;
+	border: none;
+	padding: 0;
+	margin: 0;
 }
